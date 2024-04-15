@@ -29,7 +29,7 @@ def check_url(urls):
             response = requests.get(url)
             response.raise_for_status()
         except Exception as e:
-            url_death.update({url: str(e)})
+            url_death.update({url: type(e)})
         else:
             url_alive.append(url)
 
@@ -41,17 +41,18 @@ def main():
 
     if args.output:
         write_to_file(url_alive, args.output)
-        print(f'[!] The reports save in {args.output}.')
+        print(f'[!] The reports save in {args.output}.\n')
 
     print('\n------------URL AVAILABLE--------------------')
-    print(f'[!] The number domain available is {len(url_alive)}.')
+    print(f'[!] Totals URL available: {len(url_alive)}.\n')
     for url in url_alive:
         print(f'[+] {url}')
 
     print('\n-------------URL DEATH-------------------')
-    print(f'[!] The number domain not available is {len(url_death)}.')
+    print(f'[!] Totals URL not available:  {len(url_death)}.\n')
     for url,error in url_death.items():
         print(f'[-] {url}: {error}')
 
 if __name__ == '__main__':
     main()
+    print('\n[!] DONE THE PROCESS. PLEASE CHECK THE RESULTS.')
